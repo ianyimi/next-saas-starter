@@ -13,7 +13,6 @@ import {
 import type { DataModel } from "../_generated/dataModel"
 
 import { components } from "../_generated/api"
-import { query } from "../_generated/server"
 import betterAuthPlugins from "./plugins"
 
 
@@ -24,13 +23,7 @@ export const createAuth = (
 	{ optionsOnly } = { optionsOnly: false }
 ) => {
 	return betterAuth({
-		socialProviders: {
-			google: {
-				clientId: process.env.GOOGLE_CLIENT_ID!,
-				clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-				enabled: true,
-			},
-		},
+		socialProviders: {},
 		account: {
 			modelName: COLLECTION_SLUG_ACCOUNTS
 		},
