@@ -172,13 +172,12 @@ Your app will be available at `http://localhost:3000`
 │
 ├── /components                  # React components
 │   ├── /auth                    # Authentication components
-│   ├── /Providers               # Context providers
-│   └── /dev                     # Development utilities
+│   └── /Providers               # Context providers
 │
 ├── /convex                      # Convex backend
 │   ├── /auth                    # Auth integration
 │   │   ├── index.ts            # Auth setup
-│   │   ├── queries.ts          # Auth queries
+│   │   ├── api.ts              # Auth queries
 │   │   └── plugins.ts          # Auth plugins
 │   ├── schema.ts               # Database schema
 │   ├── http.ts                 # HTTP routes
