@@ -15,7 +15,6 @@ import type { DataModel } from "../_generated/dataModel"
 import { components } from "../_generated/api"
 import betterAuthPlugins from "./plugins"
 
-
 export const authComponent = createClient<DataModel>(components.betterAuth)
 
 export const createAuth = (
