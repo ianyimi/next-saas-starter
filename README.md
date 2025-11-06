@@ -1,61 +1,72 @@
-# T3 Stack + Payload CMS + Better Auth
+# Next.js SaaS Starter with Convex + Better Auth
 
-A modern, full-stack TypeScript starter built on the [T3 Stack](https://create.t3.gg/) with integrated [Payload CMS](https://payloadcms.com/) for content management and [Better Auth](https://www.better-auth.com/) for authentication.
+A minimal, modern Next.js SaaS starter template with real-time database, type-safe APIs, and production-ready authentication.
 
 ## What Makes This Different?
 
-This project extends the standard T3 Stack with powerful, production-ready features:
+This starter template provides essential features for building SaaS applications:
 
-- **🎨 Payload CMS** - Headless CMS with a beautiful admin UI at `/admin`, GraphQL API, and type-safe collections
-- **🔐 Better Auth** - Modern authentication with Google OAuth, email/password, role-based access control, and session management
-- **⚡ tRPC + TanStack Query** - Type-safe APIs using `@trpc/tanstack-react-query` for optimal data fetching
-- **📦 MongoDB** - Flexible document database powering both Payload CMS and Better Auth
-- **🎯 Full Type Safety** - End-to-end TypeScript from database schemas to frontend components
-- **🛡️ Role-Based Access** - Built-in admin/user roles with middleware protection
+- **⚡ Convex Database** - Real-time database with automatic subscriptions, optimistic updates, and edge functions
+- **🔐 Better Auth** - Modern authentication with Google OAuth, email/password, and Convex integration
+- **🎯 Full Type Safety** - End-to-end TypeScript with auto-generated types from Convex schema
+- **🛡️ Role-Based Access** - Built-in admin/user roles with session management
 - **🎨 Modern UI** - Tailwind CSS 4 + shadcn/ui components + React 19
+- **📦 Minimal & Clean** - No unnecessary dependencies, just the essentials
 
 ## Quick Start
 
 ```bash
-# 1. Clone and install
-git clone <your-repo-url>
-cd t3-x-payloadcms
+# 1. Use this template
+Click "Use this template" on GitHub or clone directly
+
+# 2. Install dependencies
 pnpm install
 
-# 2. Set up environment variables
-cp .env.example .env
-# Edit .env with your MongoDB URI and secrets
+# 3. Set up Convex
+npx convex dev
 
-# 3. Start the development server
+# 4. Set up environment variables
+cp .env.example .env
+# Edit .env with your secrets
+
+# 5. Start the development server
 pnpm dev
 ```
 
-Visit `http://localhost:3001` to see your app!
+Visit `http://localhost:3000` to see your app!
 
 ## Setup
 
 ### Prerequisites
 
-- Node.js (18.x or later)
+- Node.js 18.x or later
 - pnpm (or npm/yarn)
-- MongoDB database (either MongoDB Atlas or local Docker instance)
+- Convex account (free tier available at [convex.dev](https://convex.dev))
 - Google Cloud Platform account (optional, for OAuth authentication)
 
 ### 1. Clone and Install Dependencies
 
 ```bash
 git clone <your-repo-url>
-cd t3-x-payloadcms
+cd next-saas-starter
 pnpm install
 ```
 
-### 2. Environment Variables
-
-Copy the example environment file:
+### 2. Setup Convex
 
 ```bash
-cp .env.example .env
+# Login to Convex (creates account if needed)
+npx convex login
+
+# Initialize Convex in this project
+npx convex dev
 ```
+
+This will:
+- Create a new Convex project
+- Generate your `CONVEX_DEPLOYMENT` and `NEXT_PUBLIC_CONVEX_URL` environment variables
+- Start the Convex dev server
+- Watch for changes to your Convex functions
 
 ### 3. Setup Google OAuth (Better Auth)
 
@@ -69,265 +80,205 @@ cp .env.example .env
    - Go to "APIs & Services" → "Credentials"
    - Click "Create Credentials" → "OAuth 2.0 Client IDs"
    - Choose "Web application"
-   - Set application name (e.g., "T3 Payload CMS App")
+   - Set application name (e.g., "Next.js SaaS Starter")
    - **Add authorized redirect URIs**:
-     - For development: `http://localhost:3001/api/auth/callback/google`
+     - For development: `http://localhost:3000/api/auth/callback/google`
      - For production: `https://yourdomain.com/api/auth/callback/google`
 5. **Copy your credentials**:
    - **Client ID**: Copy this value for `GOOGLE_CLIENT_ID`
    - **Client Secret**: Copy this value for `GOOGLE_CLIENT_SECRET`
-   - Save these credentials securely
 
-### 4. Setup MongoDB
+### 4. Configure Environment Variables
 
-#### Option A: MongoDB Atlas (Recommended)
-
-1. Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
-2. Create a free account and cluster
-3. Create a database user with read/write permissions
-4. Whitelist your IP address (or use 0.0.0.0/0 for development)
-5. Get your connection string from the "Connect" button
-
-#### Option B: Local Docker Instance
-
-```bash
-docker run --name mongodb -d -p 27017:27017 mongo:latest
-```
-
-Your connection string will be: `mongodb://localhost:27017/your-database-name`
-
-### 5. Configure Environment Variables
-
-Update your `.env` file with the following variables:
+Create a `.env.local` file in the root directory:
 
 ```env
-# Database
-DATABASE_URI="mongodb://localhost:27017/your-database-name"
-# or for Atlas: "mongodb+srv://username:password@cluster.mongodb.net/database-name"
+# Convex (auto-generated by npx convex dev)
+CONVEX_DEPLOYMENT="your-deployment-url"
+NEXT_PUBLIC_CONVEX_URL="https://your-project.convex.cloud"
+NEXT_PUBLIC_CONVEX_SITE_URL="https://your-project.convex.site"
 
 # Better Auth
 BETTER_AUTH_SECRET="your-better-auth-secret"
-NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3001"
+NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
 
-# Google OAuth (from Google Cloud Console - step 3)
+# Google OAuth
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
-
-# Payload CMS
-PAYLOAD_SECRET="your-payload-secret"
 ```
 
-Generate secrets using:
+Generate the `BETTER_AUTH_SECRET` using:
 ```bash
-openssl rand -hex 32
+openssl rand -base64 32
 ```
 
-### 6. Start Development Server
+### 5. Start Development
+
+In separate terminals, run:
 
 ```bash
+# Terminal 1: Convex dev server
+npx convex dev
+
+# Terminal 2: Next.js dev server
 pnpm dev
 ```
 
-Your app will be available at `http://localhost:3001`
-
-- Frontend: `http://localhost:3001`
-- Payload Admin: `http://localhost:3001/admin`
-- GraphQL Playground: `http://localhost:3001/api/graphql-playground`
-- tRPC API: `http://localhost:3001/api/trpc`
+Your app will be available at `http://localhost:3000`
 
 ## Features Overview
 
-### Authentication (Better Auth)
+### Authentication (Better Auth + Convex)
 
 - **Multiple providers**: Google OAuth, Email/Password
-- **Role-based access**: Admin and User roles with middleware protection
-- **Session management**: Device tracking, account linking, secure sessions
-- **Admin features**: API key generation, enhanced session data
-- **Auth pages**: Pre-built sign-in/sign-up/verify flows at `/auth/*`
+- **Role-based access**: Admin and User roles
+- **Session management**: Secure sessions stored in Convex
+- **Auth pages**: Pre-built sign-in/sign-up flows at `/auth/*`
+- **Server-side auth**: Works in Server Components, Server Actions, and API routes
 
-### Content Management (Payload CMS)
+### Real-Time Database (Convex)
 
-**Collections:**
-- **Users**: User accounts with Better Auth integration
-- **Accounts**: OAuth provider accounts (Google, etc.)
-- **Sessions**: Active user sessions
-- **Verifications**: Email verification tokens
-- **Pages**: Dynamic CMS pages with slug-based routing
-
-**Features:**
-- Beautiful admin panel at `/admin`
-- GraphQL API for flexible queries
-- REST API for CRUD operations
-- Lexical rich text editor
-- Type generation for TypeScript
-- MongoDB adapter with full relationship support
-
-### API Layer (tRPC + TanStack Query)
-
-- **Type-safe RPC**: End-to-end type safety from server to client
-- **TanStack Query integration**: Uses `@trpc/tanstack-react-query` for optimal caching
-- **Server-side rendering**: Data prefetching with automatic hydration
-- **Batching**: HTTP batch streaming for efficient requests
-- **SuperJSON**: Enhanced serialization for dates, maps, sets, etc.
-- **Development tools**: Artificial latency simulation, request logging
+- **Automatic subscriptions**: UI updates in real-time when data changes
+- **Optimistic updates**: Instant UI feedback with automatic rollback on errors
+- **Type-safe queries**: Auto-generated TypeScript types from your schema
+- **Edge functions**: Low-latency backend functions deployed globally
+- **No migrations**: Schema changes deploy automatically without downtime
 
 ### Tech Stack
 
 - **Framework**: Next.js 16 (App Router + Turbopack)
-- **Language**: TypeScript 5.8
-- **Database**: MongoDB 6.17
-- **CMS**: Payload CMS 3.62
-- **Auth**: Better Auth 1.3.2
-- **API**: tRPC 11 + TanStack Query 5
+- **Language**: TypeScript 5.8 with strict mode
+- **Database**: Convex (real-time database + backend)
+- **Auth**: Better Auth 1.3.2 with @convex-dev/better-auth
 - **UI**: React 19, Tailwind CSS 4, shadcn/ui
 - **Validation**: Zod 4.0
-- **Image Processing**: Sharp
-
-## Shopify Integration (Optional)
-
-To enable ecommerce functionality, you'll need to configure Shopify and obtain the required environment variables.
-
-### 1. Create Shopify Store
-
-If you don't have a Shopify store:
-1. Go to [Shopify](https://www.shopify.com/) and create a new store
-2. Complete the basic store setup
-
-### 2. Setup Custom App for API Access
-
-1. In your Shopify admin, go to **Settings** → **Apps and sales channels**
-2. Click **"Develop apps"** → **"Create an app"**
-3. Name your app (e.g., "T3 Payload CMS Integration")
-4. **Configure Admin API access**:
-   - Click **"Configure Admin API scopes"**
-   - Enable these scopes:
-     - `read_products` - Read product data
-     - `read_orders` - Read order data
-     - `read_customers` - Read customer data
-     - `write_orders` - Create orders
-     - `read_inventory` - Read inventory levels
-5. **Install the app** to your store
-6. **Copy Admin API credentials**:
-   - **Admin API access token**: Copy for `SHOPIFY_ACCESS_TOKEN`
-   - **API key**: Copy for `SHOPIFY_API_KEY`
-   - **API secret**: Copy for `SHOPIFY_API_SECRET`
-
-### 3. Setup Storefront API Access
-
-1. In your Shopify admin, go to **Settings** → **Apps and sales channels**
-2. Scroll down to **"Storefront API access"**
-3. Click **"Create private app"** or **"Manage private apps"**
-4. Create/edit a private app with:
-   - **Private app name**: "T3 Storefront Access"
-   - **Storefront API access scopes**:
-     - `unauthenticated_read_product_listings`
-     - `unauthenticated_read_product_inventory`
-     - `unauthenticated_write_checkouts`
-     - `unauthenticated_read_checkouts`
-5. **Save** and copy the **Storefront access token** for `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-
-### 4. Get Shop Domain
-
-Your shop domain is your Shopify store URL:
-- Format: `your-store-name.myshopify.com`
-- Example: `my-awesome-store.myshopify.com`
-- Copy this for `SHOPIFY_SHOP_DOMAIN`
-
-### 5. Update Environment Variables
-
-Add the following to your `.env` file:
-
-```env
-# Shopify Configuration
-SHOPIFY_SHOP_DOMAIN="your-store-name.myshopify.com"
-SHOPIFY_STOREFRONT_ACCESS_TOKEN="your-storefront-access-token"
-SHOPIFY_API_KEY="your-api-key"
-SHOPIFY_API_SECRET="your-api-secret"
-SHOPIFY_ACCESS_TOKEN="your-admin-api-access-token"
-```
-
-### What This Enables
-
-With these credentials configured, your application can:
-- Read product data from your Shopify store
-- Create and manage orders
-- Access customer information
-- Fetch real-time data on each request
-- Use Shopify's admin interface for product and inventory management
+- **Package Manager**: pnpm
 
 ## Project Structure
 
 ```
 /src
-├── /app                           # Next.js App Router
-│   ├── /(frontend)               # Frontend pages and layout
-│   │   ├── /auth/[pathname]      # Better Auth flow pages
-│   │   ├── /[slug]               # Dynamic CMS pages
-│   │   └── page.tsx              # Home page
-│   ├── /(payload)                # Payload admin section
-│   └── /api                      # API routes
-│       ├── /auth/[...all]        # Better Auth API
-│       └── /trpc/[trpc]          # tRPC handler
+├── /app                          # Next.js App Router
+│   ├── /(frontend)              # Frontend pages and layout
+│   │   ├── /auth/[pathname]     # Better Auth flow pages
+│   │   └── page.tsx             # Home page
+│   └── /api
+│       └── /auth/[...all]       # Better Auth API routes
 │
-├── /auth                         # Better Auth configuration
-│   ├── config.ts                 # Roles, plugins, providers
-│   ├── client.ts                 # Browser auth client
-│   └── utils.ts                  # Server-side auth utilities
+├── /auth                        # Auth configuration
+│   ├── client.ts                # Browser auth client
+│   ├── server.ts                # Server-side token helper
+│   └── utils.ts                 # Server-side auth utilities
 │
-├── /components                   # React components
-│   ├── /auth                     # Authentication components
-│   └── /dev                      # Development utilities
+├── /components                  # React components
+│   ├── /auth                    # Authentication components
+│   ├── /Providers               # Context providers
+│   └── /dev                     # Development utilities
 │
-├── /payload                      # Payload CMS
-│   ├── /collections              # Collection definitions
-│   │   ├── Users.ts              # User accounts
-│   │   ├── Accounts.ts           # OAuth accounts
-│   │   ├── Sessions.ts           # User sessions
-│   │   ├── Verifications.ts      # Email verifications
-│   │   └── Pages.ts              # CMS pages
-│   └── payload.config.ts         # CMS configuration
+├── /convex                      # Convex backend
+│   ├── /auth                    # Auth integration
+│   │   ├── index.ts            # Auth setup
+│   │   ├── queries.ts          # Auth queries
+│   │   └── plugins.ts          # Auth plugins
+│   ├── schema.ts               # Database schema
+│   ├── http.ts                 # HTTP routes
+│   └── convex.config.ts        # Convex config
 │
-├── /server/api                   # Backend API
-│   ├── /routers                  # tRPC routers
-│   ├── root.ts                   # Root router
-│   └── trpc.ts                   # tRPC setup
+├── /db/constants               # Database constants
+│   └── index.ts                # Collection names, roles
 │
-├── /trpc                         # tRPC client
-│   ├── client.tsx                # Browser client
-│   ├── server.tsx                # Server client
-│   └── query-client.ts           # TanStack Query config
-│
-└── /ui                           # shadcn/ui components
+└── /ui                         # shadcn/ui components
 ```
 
-## What's next? How do I make an app with this?
+## Usage Patterns
 
-This starter provides a solid foundation with authentication, content management, and type-safe APIs already configured. You can start building your application features immediately.
+### Client Components
+
+```typescript
+'use client'
+import { useQuery, useMutation } from 'convex/react'
+import { api } from '~/convex/_generated/api'
+
+export function MyComponent() {
+  // Real-time reactive query
+  const data = useQuery(api.myModule.myQuery)
+  const doSomething = useMutation(api.myModule.myMutation)
+
+  return <div>{data?.value}</div>
+}
+```
+
+### Server Components
+
+```typescript
+import { preloadQuery } from 'convex/nextjs'
+import { api } from '~/convex/_generated/api'
+import { getToken } from '~/auth/server'
+
+export default async function Page() {
+  const token = await getToken()
+  const preloaded = await preloadQuery(api.myModule.myQuery, {}, { token })
+
+  return <MyClientComponent preloaded={preloaded} />
+}
+```
+
+### Convex Functions
+
+```typescript
+// src/convex/myModule.ts
+import { query, mutation } from './_generated/server'
+import { authComponent } from './auth'
+
+export const myQuery = query({
+  args: {},
+  handler: async (ctx) => {
+    // Check auth
+    const user = await authComponent.getAuthUser(ctx)
+    if (!user) throw new Error("Unauthorized")
+
+    // Query data
+    return await ctx.db.query("myTable").collect()
+  }
+})
+```
+
+## What's Next?
+
+This starter provides authentication and real-time database already configured. Start building your application features immediately!
 
 ### Learn More
 
-If you are not familiar with the technologies used in this project, please refer to the respective docs:
-
 - **[Next.js](https://nextjs.org)** - React framework with App Router
+- **[Convex](https://convex.dev)** - Real-time database and backend
 - **[Better Auth](https://www.better-auth.com/)** - Modern authentication library
-- **[Payload CMS](https://payloadcms.com/docs)** - Headless CMS documentation
-- **[tRPC](https://trpc.io)** - Type-safe API framework
-- **[TanStack Query](https://tanstack.com/query)** - Data fetching and caching
 - **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS framework
 - **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component library
 
-For T3 Stack resources:
-- [T3 Stack Documentation](https://create.t3.gg/)
-- [T3 Discord Community](https://t3.gg/discord)
+## Deployment
 
-### Key Differences from Standard T3 Stack
+### Deploy to Vercel
 
-1. **Better Auth instead of NextAuth.js**: More flexible, modern authentication with better TypeScript support
-2. **Payload CMS integration**: Full-featured headless CMS with admin panel
-3. **@trpc/tanstack-react-query**: Uses the official TanStack Query integration instead of the legacy React Query wrapper
-4. **MongoDB**: Document database instead of SQL (easily adaptable to other databases via Payload adapters)
-5. **Enhanced type safety**: Payload generates types, Better Auth provides type-safe auth utilities
+The easiest way to deploy is with Vercel:
 
-## How do I deploy this?
+1. Push your code to GitHub
+2. Import your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy!
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Convex automatically deploys when you push to your main branch.
+
+### Self-Hosted with SST (Planned)
+
+Future versions will include SST configuration for one-command AWS deployment.
+
+## Documentation
+
+See the `/agent-os` folder for detailed documentation:
+- Product mission and roadmap
+- Tech stack details
+- Development standards and best practices
+
+## License
+
+MIT
