@@ -32,6 +32,7 @@ export const defaultESLintIgnores = [
 	"**/temp/",
 	"**/registry/",
 	"**/public/",
+	"**/convex/_generated/",
 	"**/.source/",
 	"**/sst.config.ts",
 	"**/sst.workflow.ts",
