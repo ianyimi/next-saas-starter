@@ -12,6 +12,7 @@
 		"lint": "eslint",
 		"lint:fix": "eslint --fix",
 		"preview": "next build && next start",
+		"secret:generate": "openssl rand -base64 32",
 		"secret:set": "sst secret set",
 		"secret:set:dev": "sst secret set --stage dev",
 		"secret:set:prod": "sst secret set --stage production",
