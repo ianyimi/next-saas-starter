@@ -90,6 +90,7 @@ export default tseslint.config(
 			"no-restricted-exports": "off",
 
 			// Perfectionist sorting configuration (from PayloadCMS)
+			"perfectionist/sort-named-imports": "warn",
 			"perfectionist/sort-objects": [
 				"warn",
 				{
