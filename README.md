@@ -100,7 +100,7 @@ NEXT_PUBLIC_CONVEX_SITE_URL="https://your-project.convex.site"
 
 # Better Auth
 BETTER_AUTH_SECRET="your-better-auth-secret"
-NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 
 # Google OAuth
 GOOGLE_CLIENT_ID="your-google-client-id"

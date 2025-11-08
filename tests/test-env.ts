@@ -34,8 +34,8 @@ function loadTestEnv() {
       DATABASE_URI: process.env.DATABASE_URI ?? "",
       GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ?? "",
       GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ?? "",
-      NEXT_PUBLIC_BETTER_AUTH_URL:
-        process.env.NEXT_PUBLIC_BETTER_AUTH_URL ?? "http://localhost:3001",
+      NEXT_PUBLIC_SITE_URL:
+        process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3001",
       NODE_ENV: process.env.NODE_ENV ?? "test",
       PAYLOAD_SECRET: process.env.PAYLOAD_SECRET ?? "",
       S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID ?? "",
@@ -50,7 +50,7 @@ function loadTestEnv() {
       DATABASE_URI: "",
       GOOGLE_CLIENT_ID: "",
       GOOGLE_CLIENT_SECRET: "",
-      NEXT_PUBLIC_BETTER_AUTH_URL: "http://localhost:3001",
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3001",
       NODE_ENV: "test",
       PAYLOAD_SECRET: "",
       S3_ACCESS_KEY_ID: "",

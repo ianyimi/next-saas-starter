@@ -8,7 +8,7 @@ import { env } from '~/env.mjs';
 
 export const authClient = createAuthClient({
 	basePath: "/api/auth",
-	baseURL: env.NEXT_PUBLIC_BETTER_AUTH_URL,
+	baseURL: env.NEXT_PUBLIC_SITE_URL,
 	plugins: [
 		convexClient(),
 		apiKeyClient(),

@@ -8,7 +8,7 @@ export async function getCurrentUser() {
 	try {
 		const token = await getToken()
 		if (!token) { return null }
-		return await fetchQuery(api.auth.api.getCurrentUser, {}, { token })
+		return await fetchQuery(api.auth.api.identifyCurrentUser, {}, { token })
 	} catch (err) {
 		console.error("Error getting current user: ", err)
 		return null

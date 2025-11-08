@@ -26,10 +26,8 @@ jobs:
       contents: read
     env:
       NODE_ENV: "production"
-      DATABASE_URI: ${{ secrets.DATABASE_URI }}
-      PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
       BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-      NEXT_PUBLIC_BETTER_AUTH_URL: ${{ vars.NEXT_PUBLIC_BETTER_AUTH_URL || secrets.NEXT_PUBLIC_BETTER_AUTH_URL }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || secrets.NEXT_PUBLIC_SITE_URL }}
     outputs:
       stage: ${{ steps.determine-stage.outputs.stage }}
       commit: ${{ steps.git.outputs.commit }}
