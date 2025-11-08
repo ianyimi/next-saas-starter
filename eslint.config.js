@@ -91,7 +91,7 @@ export default tseslint.config(
 
 			// Perfectionist sorting configuration (from PayloadCMS)
 			"perfectionist/sort-objects": [
-				"error",
+				"warn",
 				{
 					type: "natural",
 					order: "asc",
